@@ -2,9 +2,27 @@ namespace AoC24;
 
 public class Day1
 {
-    public void Calculate()
+    public int Calculate()
     {
-        ReadData();
+        var data = ReadData();
+        var distance = CalculateDistance(data);
+        Console.WriteLine(distance);
+        return distance;
+    }
+
+    private int CalculateDistance((List<int>, List<int>) data)
+    {
+        data.Item1.Sort();
+        data.Item2.Sort();
+        var distance = 0;
+        for (var i = 0; i < data.Item1.Count; i++)
+        {
+            Console.WriteLine($"{data.Item1[i]} - {data.Item2[i]}");
+
+            var lineDiff = data.Item2[i] - data.Item1[i];
+            distance += int.Abs(lineDiff);
+        }
+        return distance;
     }
 
     private (List<int>, List<int>) ReadData()
