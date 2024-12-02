@@ -17,8 +17,6 @@ public class Day1
         var distance = 0;
         for (var i = 0; i < data.Item1.Count; i++)
         {
-            Console.WriteLine($"{data.Item1[i]} - {data.Item2[i]}");
-
             var lineDiff = data.Item2[i] - data.Item1[i];
             distance += int.Abs(lineDiff);
         }
