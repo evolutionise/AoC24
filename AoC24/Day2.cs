@@ -27,21 +27,17 @@ public class Day2
         var lastEquality = Equality.Same;
         for (int i = 0; i < line.Count - 1; i++)
         {
-            if (i == 0)
-            {
-                var a = line[i];
-                var b = line[i + 1];
-                lastEquality = GetEquality(a, b);
-                continue;
-            }
-            
             var level = line[i];
             var nextLevel = line[i + 1];
             var equality = GetEquality(level, nextLevel);
-
             if (equality == Equality.Same) return 0;
+            if (int.Abs(level - nextLevel) > 3) return 0;
+            
+            if (i == 0)
+            {
+                lastEquality = equality;
+            } 
             if (lastEquality != equality) return 0;
-            if( int.Abs(level - nextLevel) > 3 ) return 0;
         }
 
         return 1;
