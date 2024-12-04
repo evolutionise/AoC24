@@ -26,23 +26,7 @@ public class Day3
     {
 
         var groups = BreakDataByConditional(data);
-        
-        // var firstLine = ParseData(groups[0]);
-
         var parsedMatches = new List<(int, int)>();
-        //
-        // for (int i = 0; i < groups.Count; i++)
-        // {
-        //     var group = groups[i];
-        //     if (i != 0)
-        //     {
-        //         
-        //     }
-        //     
-        // }
-        
-        
-        // Seeding with first piece which is enabled by default
 
         foreach (var line in groups)
         {
