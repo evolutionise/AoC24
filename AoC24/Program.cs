@@ -7,3 +7,5 @@ var day1 = new Day1();
 day1.Calculate(); 
 
 Day2.Calculate();
+
+Day3.Calculate();
