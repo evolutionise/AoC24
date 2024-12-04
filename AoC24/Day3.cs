@@ -15,6 +15,53 @@ public class Day3
         var result = CalculateResult(instructions);
         
         Console.WriteLine($"Day 3: {result}");
+
+        var part2Result = CalculateResultWithConditionals(data);
+        
+        Console.WriteLine($"Day 3, Part 2: {part2Result}");
+
+    }
+
+    private static int CalculateResultWithConditionals(string data)
+    {
+
+        var groups = BreakDataByConditional(data);
+        
+        // var firstLine = ParseData(groups[0]);
+
+        var parsedMatches = new List<(int, int)>();
+        //
+        // for (int i = 0; i < groups.Count; i++)
+        // {
+        //     var group = groups[i];
+        //     if (i != 0)
+        //     {
+        //         
+        //     }
+        //     
+        // }
+        
+        
+        // Seeding with first piece which is enabled by default
+
+        foreach (var line in groups)
+        {
+            var split = line.Split("do", 2);
+            if (split.Length < 2)
+            {
+                continue;
+            }
+            var matches = ParseData(split[1]);
+            parsedMatches.AddRange(matches.Select(ParseMatch));
+        }
+
+        parsedMatches.AddRange(ParseData(groups.First()).Select(ParseMatch));
+        return CalculateResult(parsedMatches);
+    }
+
+    private static List<string> BreakDataByConditional(string data)
+    {
+        return data.Split("don't").ToList();
     }
 
     private static int CalculateResult(IEnumerable<(int, int)> instructions)
