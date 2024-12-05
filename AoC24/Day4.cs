@@ -7,14 +7,36 @@ public static class Day4
     public static void Calculate()
     {
         var data = LoadData();
-        var result = SearchDataGrid(data);
+        var result = SearchDataGrid(data.ToList());
     }
 
-    private static int SearchDataGrid(IEnumerable<string> data)
+    private static int SearchDataGrid(IList<string> data)
     {
         var count = 0;
         count += CountHorizontal(data);
+        count += CountVertical(data);
+        count += CountDiagonal(data);
         return count;
+    }
+
+    private static int CountDiagonal(IList<string> data)
+    {
+        var convertedGrid = new List<string>();
+        for (var i = 0; i < data[0].Length; i++)
+        {
+            convertedGrid.Add(data.Select(x => x[i]).ToString());
+        }
+    }
+
+    private static int CountVertical(IList<string> data)
+    {
+        var convertedGrid = new List<string>();
+        for (var i = 0; i < data[0].Length; i++)
+        {
+            convertedGrid.Add(data.Select(x => x[i]).ToString());
+        }
+        
+        return CountHorizontal(convertedGrid);
     }
 
     private static int CountHorizontal(IEnumerable<string> data)
