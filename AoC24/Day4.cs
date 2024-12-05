@@ -15,17 +15,46 @@ public static class Day4
         var count = 0;
         count += CountHorizontal(data);
         count += CountVertical(data);
-        count += CountDiagonal(data);
+        count += CountDiagonalLeftToRight(data);
         return count;
     }
 
-    private static int CountDiagonal(IList<string> data)
+    private static int CountDiagonalLeftToRight(IList<string> data)
     {
         var convertedGrid = new List<string>();
-        for (var i = 0; i < data[0].Length; i++)
+        var wordLength = 4;
+
+        // start at 1 because we handle the 0th row separately
+        // can skip the last line because it's not like it can have enough characters anyway
+        for (var i = 1; i < data.Count; i++)
         {
-            convertedGrid.Add(data.Select(x => x[i]).ToString());
+            convertedGrid.Add(GenerateHorizontalLine(data, i));
         }
+        //handle line 1
+        for (var i = 0; i + wordLength <= data[0].Length; i++)
+        {
+            List<char> line = [];
+            for (var j = i; j <= data[0].Length; j++)
+            {
+                line.Add(data[i][j]);
+            }
+            convertedGrid.Add(line.ToString());
+        }
+
+        return CountHorizontal(convertedGrid);
+    }
+
+    private static string GenerateHorizontalLine(IList<string> data, int index)
+    {
+        var flattenedLine = new List<char>();
+        var currentLine = data[index];
+        
+        for (var i = 0; i < currentLine.Length; i++)
+        {
+            flattenedLine.Add(data[index][i]);
+            index++;
+        }
+        return flattenedLine.ToString();
     }
 
     private static int CountVertical(IList<string> data)
