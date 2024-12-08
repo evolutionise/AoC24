@@ -8,6 +8,7 @@ public static class Day4
     {
         var data = LoadData();
         var result = SearchDataGrid(data.ToList());
+        Console.WriteLine($"Day 4, Part 1: {result}");
     }
 
     private static int SearchDataGrid(IList<string> data)
@@ -16,7 +17,36 @@ public static class Day4
         count += CountHorizontal(data);
         count += CountVertical(data);
         count += CountDiagonalLeftToRight(data);
+        count += CountDiagonalRightToLeft(data);
         return count;
+    }
+
+    private static int CountDiagonalRightToLeft(IList<string> data)
+    {
+        var convertedGrid = new List<string>();
+        var wordLength = 4;
+        
+        // start at 1 because we handle the 0th row separately
+        // can skip the last line because it's not like it can have enough characters anyway
+        for (var i = 1; i < data.Count - 1; i++)
+        {
+            convertedGrid.Add(GenerateReverseHorizontalLine(data, i));
+        }
+        return CountHorizontal(convertedGrid);
+    }
+
+    private static string GenerateReverseHorizontalLine(IList<string> data, int index)
+    {
+        var flattenedLine = new List<char>();
+        var currentLine = data[index];
+        
+        for (var i = currentLine.Length - 1; i >= 0; i--)
+        {
+            flattenedLine.Add(data[index][i]);
+            index++;
+            if (index >= data.Count) break;
+        }
+        return flattenedLine.ToString();
     }
 
     private static int CountDiagonalLeftToRight(IList<string> data)
@@ -26,7 +56,7 @@ public static class Day4
 
         // start at 1 because we handle the 0th row separately
         // can skip the last line because it's not like it can have enough characters anyway
-        for (var i = 1; i < data.Count; i++)
+        for (var i = 1; i < data.Count - 1; i++)
         {
             convertedGrid.Add(GenerateHorizontalLine(data, i));
         }
@@ -34,7 +64,7 @@ public static class Day4
         for (var i = 0; i + wordLength <= data[0].Length; i++)
         {
             List<char> line = [];
-            for (var j = i; j <= data[0].Length; j++)
+            for (var j = i; j < data[0].Length; j++)
             {
                 line.Add(data[i][j]);
             }
@@ -49,10 +79,11 @@ public static class Day4
         var flattenedLine = new List<char>();
         var currentLine = data[index];
         
-        for (var i = 0; i < currentLine.Length; i++)
+        for (var i = 0; i < currentLine.Length - 1; i++)
         {
             flattenedLine.Add(data[index][i]);
             index++;
+            if (index >=  data.Count) break;
         }
         return flattenedLine.ToString();
     }
